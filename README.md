@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ### Prerequisites
 - Node.js and npm installed
-- PostgreSQL database set up locally or remotely
+- PostgreSQL database set up locally
 - A `.env` file configured with the database credentials
 
 ### Installation Steps

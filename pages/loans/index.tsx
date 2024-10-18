@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { PrismaClient, Loan } from '@prisma/client';
+import Link from 'next/link';
 import {
   Table,
   TableBody,
@@ -43,8 +44,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const LoanList = ({ loans }: LoanListProps) => {
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-5">Loan List</h1>
+    <div className="container mx-auto my-10">
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="text-2xl font-bold">Loan List</h1>
+        <Link href="/loans/create" className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-blue-600 transition-colors">
+          <span className="text-xl">+</span>
+        </Link>
+      </div>
       <Table>
         <TableCaption>A list of all loans</TableCaption>
         <TableHeader>
