@@ -1,5 +1,14 @@
 import { GetServerSideProps } from 'next';
 import { PrismaClient, Loan } from '@prisma/client';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 // Define a new type that represents the serializable loan data
 type SerializableLoan = Omit<Loan, 'startDate' | 'endDate' | 'createdAt' | 'updatedAt'> & {
@@ -33,20 +42,37 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const LoanList = ({ loans }: LoanListProps) => {
   return (
-    <div>
-      <h1>Loan List</h1>
-      <ul>
-        {loans.map((loan) => (
-          <li key={loan.id}>
-            {loan.borrowerName} - ${loan.loanAmount} @ {loan.interestRate}% - Status: {loan.status}
-            <br />
-            Start Date: {new Date(loan.startDate).toLocaleDateString()}
-            {loan.endDate && ` - End Date: ${new Date(loan.endDate).toLocaleDateString()}`}
-            <br />
-            Created: {new Date(loan.createdAt).toLocaleString()}
-          </li>
-        ))}
-      </ul>
+    <div className="container mx-auto py-10">
+      <h1 className="text-2xl font-bold mb-5">Loan List</h1>
+      <Table>
+        <TableCaption>A list of all loans</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Borrower Name</TableHead>
+            <TableHead>Loan Amount</TableHead>
+            <TableHead>Interest Rate</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Start Date</TableHead>
+            <TableHead>End Date</TableHead>
+            <TableHead>Created At</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {loans.map((loan) => (
+            <TableRow key={loan.id}>
+              <TableCell>{loan.borrowerName}</TableCell>
+              <TableCell>${loan.loanAmount.toFixed(2)}</TableCell>
+              <TableCell>{loan.interestRate}%</TableCell>
+              <TableCell>{loan.status}</TableCell>
+              <TableCell>{new Date(loan.startDate).toLocaleDateString()}</TableCell>
+              <TableCell>
+                {loan.endDate ? new Date(loan.endDate).toLocaleDateString() : 'N/A'}
+              </TableCell>
+              <TableCell>{new Date(loan.createdAt).toLocaleString()}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 };
