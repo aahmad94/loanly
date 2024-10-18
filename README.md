@@ -24,9 +24,11 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 3. **Set Up Environment Variables**
    - Create a `.env` file in the root directory.
-   - Add the following environment variables:
+   - Add the following environment variables w/ **your own credentials**:
      ```bash
-     DATABASE_URL="your_database_url"
+     touch .env
+     
+     echo 'DATABASE_URL="postgresql://username:password@localhost:5432/loanlydb?schema=public"' >> .env
      ```
 
 4. **Run Prisma Migrate**
