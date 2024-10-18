@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import '../../app/globals.css'
+import Navbar from '@/components/Navbar'
 
 // Define a new type that represents the serializable loan data
 type SerializableLoan = Omit<Loan, 'startDate' | 'endDate' | 'createdAt' | 'updatedAt'> & {
@@ -44,15 +45,16 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const LoanList = ({ loans }: LoanListProps) => {
   return (
-    <div className="container mx-auto my-10">
-      <div className="flex justify-between items-center mb-5">
+    <div>
+      <Navbar />
+      <div className="m-10">
+        <div className="flex justify-between items-center mb-5">
         <h1 className="text-2xl font-bold">Loan List</h1>
         <Link href="/loans/create" className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-blue-600 transition-colors">
           <span className="text-xl">+</span>
         </Link>
       </div>
       <Table>
-        <TableCaption>A list of all loans</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Borrower Name</TableHead>
@@ -80,6 +82,7 @@ const LoanList = ({ loans }: LoanListProps) => {
           ))}
         </TableBody>
       </Table>
+    </div>
     </div>
   );
 };
