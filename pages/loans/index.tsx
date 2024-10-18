@@ -2,9 +2,11 @@ import { GetServerSideProps } from 'next';
 import { PrismaClient, Loan } from '@prisma/client';
 
 // Define a new type that represents the serializable loan data
-type SerializableLoan = Omit<Loan, 'startDate' | 'endDate'> & {
+type SerializableLoan = Omit<Loan, 'startDate' | 'endDate' | 'createdAt' | 'updatedAt'> & {
   startDate: string;
   endDate: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type LoanListProps = {
@@ -20,6 +22,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
     ...loan,
     startDate: loan.startDate.toISOString(),
     endDate: loan.endDate ? loan.endDate.toISOString() : null,
+    createdAt: loan.createdAt.toISOString(),
+    updatedAt: loan.updatedAt.toISOString(),
   }));
 
   return {
@@ -38,6 +42,8 @@ const LoanList = ({ loans }: LoanListProps) => {
             <br />
             Start Date: {new Date(loan.startDate).toLocaleDateString()}
             {loan.endDate && ` - End Date: ${new Date(loan.endDate).toLocaleDateString()}`}
+            <br />
+            Created: {new Date(loan.createdAt).toLocaleString()}
           </li>
         ))}
       </ul>
