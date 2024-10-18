@@ -44,6 +44,25 @@ const LoanPage = ({ loan }: LoanPageProps) => {
         return <div>Loan not found</div>;
     }
 
+    const handleDelete = async () => {
+        if (confirm('Are you sure you want to delete this loan?')) {
+            try {
+                const response = await fetch(`/api/loans/delete?id=${loan.id}`, {
+                    method: 'DELETE',
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete loan');
+                }
+
+                router.push('/loans');
+            } catch (error) {
+                console.error('Error deleting loan:', error);
+                alert('Failed to delete loan. Please try again.');
+            }
+        }
+    };
+
     return (
         <div>
             <Navbar />
@@ -87,10 +106,11 @@ const LoanPage = ({ loan }: LoanPageProps) => {
                             <p>{new Date(loan.updatedAt).toLocaleString()}</p>
                         </div>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="flex justify-between">
                         <Link href="/loans">
-                            <Button>Back</Button>
+                            <Button variant="outline">Back</Button>
                         </Link>
+                        <Button variant="destructive" onClick={handleDelete}>Delete</Button>
                     </CardFooter>
                 </Card>
             </div>

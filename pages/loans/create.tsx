@@ -3,7 +3,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import create from '../api/loans/create'
 import '../../app/globals.css'
+import { useRouter } from 'next/router'
 import Navbar from "@/components/Navbar";
+
 const loanSchema = z.object({
   borrowerName: z.string().min(1, "Borrower name is required"),
   loanAmount: z.number().positive("Loan amount must be positive"),
@@ -20,6 +22,7 @@ const loanSchema = z.object({
 type LoanFormData = z.infer<typeof loanSchema>;
 
 const CreateLoanForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -44,6 +47,7 @@ const CreateLoanForm = () => {
   
       // Handle success (e.g., show a success message, redirect, etc.)
       console.log("Loan created successfully");
+      router.push('/loans');
     } catch (error) {
       // Handle error (e.g., show an error message)
       console.error("Error creating loan:", error);
